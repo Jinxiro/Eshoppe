@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+  </head>
+  <style>
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+      font-family: "Kanit", sans-serif;
+    }
+    body {
+      background-color: whitesmoke;
+    }
+  </style>
+  <body>
+    <main>
+      <button onclick="Logout()">Log Out</button>
+    </main>
+    <script>
+      async function checkToken() {
+        let payload = {
+          token: localStorage.getItem("token"),
+        };
+        let option = {
+          method: "post",
+          body: JSON.stringify(payload),
+        };
+        let response = await fetch(
+          "http://localhost/Eshop/api/user.php?action=check",
+          option
+        );
+
+        if (response.ok) {
+          console.log("Accessed by Admin");
+        } else {
+          window.location.href = "login.html";
+        }
+      }
+
+      async function Logout() {
+        let payload = {
+          token: localStorage.removeItem("token"),
+        };
+
+        let option = {
+          method: "post",
+          body: JSON.stringify(payload),
+        };
+        window.location.href = "login.html";
+
+        let response = await fetch(
+          "http://localhost/Eshop/api/user.php?action=check",
+          option
+        );
+        checkToken();
+      }
+      checkToken();
+    </script>
+  </body>
+</html>

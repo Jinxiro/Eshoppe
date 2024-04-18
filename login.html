@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Login</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+        font-family: "Kanit", sans-serif;
+      }
+      body {
+        background-color: whitesmoke;
+      }
+      dialog {
+        border: none;
+        border-radius: 10px;
+        padding: 20px;
+
+        margin: auto;
+        form {
+          margin: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          p {
+            color: blue;
+            font-weight: 700;
+            transition: 0.5s ease;
+            &:hover {
+              cursor: pointer;
+              color: rgb(79, 79, 255);
+              text-decoration: underline;
+            }
+          }
+          input {
+            width: 300px;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 10px;
+            border: none;
+            background-color: rgb(159, 255, 255);
+          }
+          button {
+            border-radius: 10px;
+            border: none;
+            width: 300px;
+            margin: 10px;
+            padding: 10px;
+          }
+        }
+      }
+      main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        .form-container {
+          border-radius: 20px;
+          box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.237);
+          padding: 20px;
+          background-color: rgb(255, 255, 255);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          h1 {
+            font-size: 50px;
+            margin: 20px;
+            font-weight: 600;
+            color: rgb(0, 0, 145);
+          }
+          form {
+            margin: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            p {
+              color: blue;
+              font-weight: 500;
+              transition: 0.5s ease;
+              &:hover {
+                cursor: pointer;
+                color: rgb(79, 79, 255);
+                text-decoration: underline;
+              }
+            }
+            input {
+              width: 300px;
+              padding: 15px;
+              margin: 10px;
+              border-radius: 10px;
+              border: none;
+              background-color: rgb(159, 255, 255);
+            }
+            button {
+              border-radius: 10px;
+              border: none;
+              width: 300px;
+              margin: 10px;
+              padding: 10px;
+            }
+          }
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <dialog id="forgotPass">
+      <h1>Reset Password</h1>
+      <form action="" method="dialog" onsubmit="">
+        <input type="email" name="" id="emailInput" placeholder="Enter email address" />
+        <input
+          type="password"
+          name=""
+          id="newpassInput"
+          placeholder="New password"
+        />
+        <input
+          type="password"
+          name=""
+          id="retypepassInput"
+          placeholder="Retype New password"
+        />
+        <button type="submit">Submit</button>
+        <button type="submit">Cancel</button>
+      </form>
+    </dialog>
+    <main>
+      <div class="form-container">
+        <h1>
+          Hi, <br />
+          Welcome Back!
+        </h1>
+        <form action="" method="dialog" onsubmit="LogSubmit()">
+          <input type="text" placeholder="username" id="usernameInput" />
+          <input type="password" placeholder="password" id="passwordInput" />
+          <button type="submit">Log In</button>
+          <p onclick="resetPass()">Forgot password</p>
+          <button type="submit">Create a new Account</button>
+        </form>
+      </div>
+    </main>
+    <script>
+      async function checkToken() {
+        let payload = {
+          token: localStorage.getItem("token"),
+        };
+        let option = {
+          method: "post",
+          body: JSON.stringify(payload),
+        };
+        let response = await fetch(
+          "http://localhost/Eshop/api/user.php?action=check",
+          option
+        );
+
+        if (response.ok) {
+          window.location.href = "homepage.html";
+        } else {
+          console.log("Accessed by Admin");
+        }
+      }
+      function resetPass() {
+        forgotPass.showModal();
+      }
+
+      async function LogSubmit() {
+        let payload = {
+          username: usernameInput.value,
+          password: passwordInput.value,
+        };
+        let option = {
+          method: "post",
+          body: JSON.stringify(payload),
+        };
+
+        let response = await fetch(
+          "http://localhost/Eshop/api/user.php?action=login",
+          option
+        );
+
+        if (response.ok) {
+          let token = await response.text();
+          localStorage.setItem("token", token);
+          console.log(token);
+          checkToken();
+          window.location.href = "homepage.html";
+
+          alert("Welcome!");
+        } else {
+          alert("Invalid");
+        }
+      }
+
+      checkToken();
+    </script>
+  </body>
+</html>
