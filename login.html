@@ -18,7 +18,44 @@
         font-family: "Kanit", sans-serif;
       }
       body {
-        background-color: whitesmoke;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-color: #b899ff;
+        background-image: radial-gradient(
+            at 4% 76%,
+            hsla(287, 99%, 70%, 1) 0px,
+            transparent 50%
+          ),
+          radial-gradient(
+            at 74% 86%,
+            hsla(334, 70%, 66%, 1) 0px,
+            transparent 50%
+          ),
+          radial-gradient(
+            at 7% 41%,
+            hsla(330, 73%, 70%, 1) 0px,
+            transparent 50%
+          ),
+          radial-gradient(
+            at 86% 22%,
+            hsla(280, 77%, 77%, 1) 0px,
+            transparent 50%
+          ),
+          radial-gradient(
+            at 91% 49%,
+            hsla(174, 98%, 67%, 1) 0px,
+            transparent 50%
+          ),
+          radial-gradient(
+            at 17% 44%,
+            hsla(195, 71%, 63%, 1) 0px,
+            transparent 50%
+          ),
+          radial-gradient(
+            at 13% 32%,
+            hsla(232, 88%, 71%, 1) 0px,
+            transparent 50%
+          );
       }
       dialog {
         border: none;
@@ -32,6 +69,7 @@
           justify-content: center;
           align-items: center;
           flex-direction: column;
+
           p {
             color: blue;
             font-weight: 700;
@@ -64,6 +102,19 @@
         justify-content: center;
         align-items: center;
         min-height: 100vh;
+        .left-content{
+  
+          display: flex;
+          justify-content: center;
+          align-items: left;
+          flex-direction: column;
+          margin: 20px;
+          width: 500px;
+          color: white;
+          h1{
+            font-size: 45px;
+          }
+        }
         .form-container {
           border-radius: 20px;
           box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.237);
@@ -73,8 +124,10 @@
           justify-content: center;
           align-items: center;
           h1 {
+            max-width: 200px;
             font-size: 50px;
             margin: 20px;
+            line-height: 50px;
             font-weight: 600;
             color: rgb(0, 0, 145);
           }
@@ -84,7 +137,15 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            p {
+            .headForm {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              img {
+                height: 80px;
+              }
+            }
+            /* p {
               color: blue;
               font-weight: 500;
               transition: 0.5s ease;
@@ -93,7 +154,8 @@
                 color: rgb(79, 79, 255);
                 text-decoration: underline;
               }
-            }
+            } */
+
             input {
               width: 300px;
               padding: 15px;
@@ -118,7 +180,12 @@
     <dialog id="forgotPass">
       <h1>Reset Password</h1>
       <form action="" method="dialog" onsubmit="resetPass()">
-        <input type="email" name="" id="emailInput" placeholder="Enter email address" />
+        <input
+          type="email"
+          name=""
+          id="emailInput"
+          placeholder="Enter email address"
+        />
         <input
           type="password"
           name=""
@@ -137,19 +204,32 @@
       </form>
     </dialog>
     <main>
+      <div class="left-content">
+        <h1>Hello shoppers!</h1>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati nesciunt voluptas eaque quas reiciendis consequuntur ratione facilis laborum distinctio sequi maxime perspiciatis voluptatibus maiores eius deserunt ipsam natus, aliquam velit.</p>
+      </div>
+      <div class="right-content">
       <div class="form-container">
         <h1>
-          Hi, <br />
-          Welcome Back!
+          Shop Outside the Box
         </h1>
         <form action="" method="dialog" onsubmit="LogSubmit()">
+          <div class="headForm">
+            <img
+              src="https://logowik.com/content/uploads/images/shop-app6999.jpg"
+              alt=""
+            />
+            <h2>Log In</h2>
+          </div>
           <input type="text" placeholder="username" id="usernameInput" />
           <input type="password" placeholder="password" id="passwordInput" />
           <button type="submit">Log In</button>
-          <p onclick="forgotPass.showModal();">Forgot password</p>
+          <p>or</p>
+          <!-- <p onclick="forgotPass.showModal();">Forgot password</p> -->
           <button type="submit">Create a new Account</button>
         </form>
       </div>
+    </div>
     </main>
     <script>
       async function checkToken() {
@@ -172,28 +252,27 @@
         }
       }
       async function resetPass() {
-        
-        if(newpassInput.value == retypepassInput.value){
+        if (newpassInput.value == retypepassInput.value) {
+          
           let payload = {
             email: emailInput.value,
-            passwordInput: newpassInput.value,
+            passwordInput: newpassInput.value
           };
+
           let option = {
             method: "post",
             body: JSON.stringify(payload),
           };
-  
+
           let response = await fetch(
             "http://localhost/Eshoppe/api/user.php?action=reset",
             option
           );
-          
-        }else{
-          passTrap.innerHTML = "Wrong Credentials"
+        } else {
+          passTrap.innerHTML = "Wrong Credentials";
           forgotPass.showModal();
           console.log("Invalid");
         }
-
       }
 
       async function LogSubmit() {

@@ -12,7 +12,24 @@ if ($action == 'check'){
 if ($action == 'reset'){
     resetPass();
 }
+if ($action == 'profile'){
+    displayProfile();
+}
 
+function displayProfile(){
+    $payload = file_get_contents("php://input");
+    $payload = json_decode($payload);
+    
+    $conn = getDb();
+    $query = $conn->query("SELECT * FROM `user` 
+    WHERE 
+    `token` LIKE '$payload->token'
+    ");
+
+    $results = $query->fetch(PDO::FETCH_ASSOC);
+    echo json_encode($results);
+
+}
 
 function generateToken($length = 32) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*?\+';
@@ -88,9 +105,7 @@ function resetPass() {
 
 if($results){
     http_response_code(200);
-    echo "Valid";
     $conn->query("UPDATE `user` SET `password` = '$payload->passwordInput' WHERE `user`.`email` = '$payload->email';");
-    echo $payload->passwordInput;
 }else{
     http_response_code(400);
     echo "Invalid"; 
