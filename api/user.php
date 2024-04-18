@@ -9,6 +9,9 @@ if ($action == 'login'){
 if ($action == 'check'){
     check();
 }
+if ($action == 'reset'){
+    resetPass();
+}
 
 
 function generateToken($length = 32) {
@@ -65,6 +68,29 @@ function check() {
 if($results){
     http_response_code(200);
     echo "Valid";
+}else{
+    http_response_code(400);
+    echo "Invalid"; 
+}
+}
+
+function resetPass() {
+    $payload = file_get_contents("php://input");
+    $payload = json_decode($payload);
+    
+    $conn = getDb();
+    $query = $conn->query("SELECT * FROM `user` 
+    WHERE 
+    `email` LIKE '$payload->email'
+    ");
+
+    $results = $query->fetch(PDO::FETCH_ASSOC);
+
+if($results){
+    http_response_code(200);
+    echo "Valid";
+    $conn->query("UPDATE `user` SET `password` = '$payload->passwordInput' WHERE `user`.`email` = '$payload->email';");
+    echo $payload->passwordInput;
 }else{
     http_response_code(400);
     echo "Invalid"; 

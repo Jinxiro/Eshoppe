@@ -4,7 +4,7 @@ function getDb(){
     $host = "localhost";
     $dbname = "eshopdb";
     $user = "eshopdb";
-    $password = "cvHCQy*.v/UB/UqK";
+    $password = "cvHCQy*.v/UB/UqK"; 
     
     $dsn = "mysql:
             host=$host;

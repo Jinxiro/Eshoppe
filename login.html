@@ -117,7 +117,7 @@
   <body>
     <dialog id="forgotPass">
       <h1>Reset Password</h1>
-      <form action="" method="dialog" onsubmit="">
+      <form action="" method="dialog" onsubmit="resetPass()">
         <input type="email" name="" id="emailInput" placeholder="Enter email address" />
         <input
           type="password"
@@ -131,6 +131,7 @@
           id="retypepassInput"
           placeholder="Retype New password"
         />
+        <p id="passTrap"></p>
         <button type="submit">Submit</button>
         <button type="submit">Cancel</button>
       </form>
@@ -145,7 +146,7 @@
           <input type="text" placeholder="username" id="usernameInput" />
           <input type="password" placeholder="password" id="passwordInput" />
           <button type="submit">Log In</button>
-          <p onclick="resetPass()">Forgot password</p>
+          <p onclick="forgotPass.showModal();">Forgot password</p>
           <button type="submit">Create a new Account</button>
         </form>
       </div>
@@ -170,8 +171,29 @@
           console.log("Accessed by Admin");
         }
       }
-      function resetPass() {
-        forgotPass.showModal();
+      async function resetPass() {
+        
+        if(newpassInput.value == retypepassInput.value){
+          let payload = {
+            email: emailInput.value,
+            passwordInput: newpassInput.value,
+          };
+          let option = {
+            method: "post",
+            body: JSON.stringify(payload),
+          };
+  
+          let response = await fetch(
+            "http://localhost/Eshoppe/api/user.php?action=reset",
+            option
+          );
+          
+        }else{
+          passTrap.innerHTML = "Wrong Credentials"
+          forgotPass.showModal();
+          console.log("Invalid");
+        }
+
       }
 
       async function LogSubmit() {
