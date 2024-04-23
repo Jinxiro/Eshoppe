@@ -358,7 +358,7 @@
 
     <dialog id="AddOrEdit">
       <h1>Add Products</h1>
-      <form action="" method="dialog" onsubmit="">
+      <form action="" method="dialog" onsubmit="addprod()">
         <input
           type="text"
           name=""
@@ -389,7 +389,6 @@
           id="imageIput"
           placeholder="Provide Image Link"
         />
-        <p id="passTrap"></p>
         <button type="submit">Submit</button>
         <button type="submit">Cancel</button>
       </form>
@@ -461,17 +460,18 @@
 
          let options = {
            method: "post",
-           body: JSON.stringify(product),
+           body: JSON.stringify(payload),
          };
 
          let response = await fetch(
-             "http://localhost/API-Project/api/inventoryFetcher.php?action=create",
+             "http://localhost/Eshoppe/api/inventoryDb.php?action=create",
              options
            );
            console.log(response);
            getInventory();
       }
       function renderInventory(){
+        productcontent.innerHTML = ``
         for (const inventory of inventories) {
           productcontent.innerHTML += `
         <div class="prodItem" id="prodItem">

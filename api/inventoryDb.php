@@ -6,6 +6,9 @@ $action = $_GET['action'] ?? null;
 if ($action == 'read'){
     read();
 }
+else if ($action == 'create'){
+    create();
+}
 
 function read(){
     $conn = getDb();
@@ -19,7 +22,7 @@ function create() {
 
     $conn = getDb();
     $query = $conn->query("
-    IINSERT INTO `eshop_inventory` (`id`, `productName`, `image`, `brand`, `price`, `stock`) VALUES (NULL, 'ERA UNISEX', 'https://www.footlocker.ph/media/catalog/product/cache/1384ea813c36abc3a773dd6494b9b881/0/8/0803-VAS000EWZBLK00506H-1.jpg', 'VANS', '7795', '20');
+    IINSERT INTO `eshop_inventory` (`id`, `productName`, `image`, `brand`, `price`, `stock`) VALUES (NULL, '$payload->productName', '$payload->imagelink', '$payload->brand', '$payload->price', '$payload->stock');
     ");
     $results = $query->fetch();
     print_r($results);
