@@ -127,9 +127,7 @@
           }
 
           p {
-            
             margin-right: auto;
-           
           }
           button {
             border: none;
@@ -153,6 +151,19 @@
             font-weight: 700;
             font-size: 28px;
           }
+        }
+      }
+    }
+    #AddOrEdit{
+      margin: auto;
+      padding: 20px;
+      form{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        input{
+          padding: 15px;
         }
       }
     }
@@ -180,13 +191,14 @@
         align-items: center;
         flex-wrap: wrap;
       }
-      p{
-        background-color: aqua;
+      p {
+        color: white;
+        background-color: rgb(20, 20, 20);
         padding: 10px 20px;
         border-radius: 20px;
         margin: 0px 20px;
         font-weight: 600;
-        &:hover{
+        &:hover {
           cursor: pointer;
         }
       }
@@ -199,6 +211,74 @@
         border-radius: 10px;
         padding: 15px;
         width: 500px;
+      }
+    }
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      header {
+        img {
+          min-width: 100vw;
+        }
+      }
+      .productcontent {
+        margin: 20px 0px;
+        display: flex;
+        
+
+        .prodItem {
+          padding: 20px;
+          background-color: white;
+          width: 300px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          .line {
+            width: 280px;
+            padding: 1px;
+            background-color: rgb(151, 151, 151);
+          }
+          .prodDetail {
+            width: 300px;
+            padding: 10px;
+            h1 {
+              font-size: 20px;
+              font-weight: 600;
+            }
+            p {
+              margin: 10px 0px;
+              font-size: 14px;
+            }
+            .prodbtn{
+              i{
+                border-radius: 5px;
+                outline: 1px solid black;
+                padding: 5px;
+                width: 50px;
+                text-align: center;
+              }
+              button{
+                border: none;
+                color: white;
+                background-color: black;
+                border-radius: 5px;
+                width: 50px;
+                padding: 5px;
+              }
+            }
+          
+            #priceTag {
+              color: rgb(54, 54, 54);
+            }
+          }
+          img {
+            height: 300px;
+            width: 300px;
+          }
+        }
       }
     }
   </style>
@@ -275,21 +355,145 @@
         </div>
       </div>
     </dialog>
+
+    <dialog id="AddOrEdit">
+      <h1>Add Products</h1>
+      <form action="" method="dialog" onsubmit="">
+        <input
+          type="text"
+          name=""
+          id="prodnameInput"
+          placeholder="Enter Product Name"
+        />
+        <input
+          type=""
+          name=""
+          id="brandinput"
+          placeholder="Brand Name"
+        />
+        <input
+          type="number"
+          name=""
+          id="priceInput"
+          placeholder="Price"
+        />
+        <input
+          type="number"
+          name=""
+          id="stockInput"
+          placeholder="Stock"
+        />
+        <input
+          type="text"
+          name=""
+          id="imageIput"
+          placeholder="Provide Image Link"
+        />
+        <p id="passTrap"></p>
+        <button type="submit">Submit</button>
+        <button type="submit">Cancel</button>
+      </form>
+    </dialog>
+
     <nav>
       <img
-        src="https://logowik.com/content/uploads/images/shop-app6999.jpg"
+        src="https://logos-world.net/wp-content/uploads/2022/04/Foot-Locker-Logo.png"
         alt=""
       />
       <input type="text" name="" id="" placeholder="search something" />
       <div>
         <p id="profileName" onclick="profile.showModal()"></p>
         <button>Cart</button>
-
         <button onclick="Logout()">Log Out</button>
+        <button onclick="AddOrEdit.showModal()">Add Products</button>
       </div>
     </nav>
-    <main></main>
+    
+
+    <main>
+      <header>
+        <img
+          src="https://www.footlocker.ph/media/weltpixel/owlcarouselslider/images/p/l/playoffs_1600x500_4.jpg"
+          alt=""
+        />
+      </header>
+
+      <div class="productcontent" id="productcontent">
+        <!-- <div class="prodItem" id="prodItem">
+          <img
+            src="https://www.footlocker.ph/media/catalog/product/cache/1384ea813c36abc3a773dd6494b9b881/0/8/0803-NEWMR530SGD00W06H-1.jpg"
+            alt=""
+          />
+          <div class="line"></div>
+          <div class="prodDetail">
+            <h1>MR 530</h1>
+            <p>New Balance</p>
+            <p id="priceTag">Php 7000</p>
+            <div class="prodbtn">
+              <i class="fa fa-shopping-cart"></i>
+              <button>BUY</button>
+            </div>
+          </div>
+        </div> -->
+      </div>
+
+      <h1></h1>
+    </main>
     <script>
+      let inventories = [];
+      async function getInventory(){
+        
+         let response = await fetch(
+           "http://localhost/Eshoppe/api/inventoryDb.php?action=read"
+         );
+         inventories = await response.json();
+         console.log(inventories);
+         renderInventory();
+       }
+      async function addprod(){
+        let payload = {
+           productName: prodnameInput.value,
+           brand: brandinput.value,
+           price: priceInput.value,
+           stock: stockInput.value,
+           imagelink: imageIput.value,
+         };
+
+         let options = {
+           method: "post",
+           body: JSON.stringify(product),
+         };
+
+         let response = await fetch(
+             "http://localhost/API-Project/api/inventoryFetcher.php?action=create",
+             options
+           );
+           console.log(response);
+           getInventory();
+      }
+      function renderInventory(){
+        for (const inventory of inventories) {
+          productcontent.innerHTML += `
+        <div class="prodItem" id="prodItem">
+          <img
+            src="${inventory.image}"
+            alt=""
+          />
+          <div class="line"></div>
+          <div class="prodDetail">
+            <h1>${inventory.productName}</h1>
+            <p>${inventory.brand}</p>
+            <p id="priceTag">Php ${inventory.price}</p>
+            <div class="prodbtn">
+              <i class="fa fa-shopping-cart"></i>
+              <button>BUY</button>
+            </div>
+          </div>
+        </div>
+          `;
+      }
+    }
+
       async function checkToken() {
         let payload = {
           token: localStorage.getItem("token"),
@@ -373,6 +577,7 @@
         );
         checkToken();
       }
+      getInventory();
       checkToken();
       displayProfile();
     </script>
