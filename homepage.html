@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
@@ -16,6 +20,16 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
+    />
     <title>Home</title>
   </head>
   <style>
@@ -26,7 +40,90 @@
       font-family: "Montserrat", sans-serif;
     }
     body {
+      overflow-x: hidden;
       background-color: rgb(233, 243, 255);
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    ::-webkit-scrollbar {
+      padding: 10px;
+      width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      position: absolute;
+      height: 10px;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgb(31, 31, 31);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      cursor: pointer;
+      background: #121212;
+    }
+    #adminInventory {
+      margin: auto;
+      width: 1000px;
+      padding: 0px 20px;
+      height: 500px;
+      border: none;
+      header{
+        padding: 10px 0px;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        button{
+          margin: 10px 0px;
+          border-radius: 10px;
+          border: none;
+          color: white;
+          background-color: black;
+          padding: 10px;
+        }
+        input{
+          width: 400px;
+          background-color: whitesmoke;
+          border-radius: 10px;
+          border: none;
+          padding: 10px;
+          margin-right: auto;
+        }
+      }
+      #productTable {
+        overflow: auto;
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      #productTable td,
+      #productTable th {
+        border: 1px solid #ddd;
+        padding: 10px;
+        button{
+          padding: 10px;
+        }
+      }
+
+      #productTable tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      #productTable tr:hover {
+        background-color: #ddd;
+      }
+
+      #productTable th {
+        padding: 15px 10px;
+        text-align: left;
+        background-color: #2b2b2b;
+        color: white;
+      }
     }
     #forgotPass {
       border: none;
@@ -71,14 +168,19 @@
     #profile {
       border: none;
       border-radius: 10px;
-      width: 350px;
-      height: 500px;
+      width: 400px;
+      height: 600px;
       justify-content: center;
       align-items: center;
       padding: 20px;
       margin: auto;
       .profile-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
         .email {
+          width: 350px;
           text-align: center;
           margin: 35px 0px;
           outline: 1px solid blue;
@@ -96,12 +198,15 @@
             font-size: 12px;
           }
         }
+
         #dataStatus {
           div {
             align-items: center;
             display: flex;
             margin: 10px 0px;
+            width: 350px;
             i {
+              color: white;
               margin-right: 20px;
               display: flex;
               align-items: center;
@@ -109,8 +214,9 @@
               font-size: 20px;
               width: 40px;
               height: 40px;
-              background-color: rgb(186, 186, 255);
+              background-color: rgb(20, 20, 20);
               border-radius: 20px;
+              transition: 0.5 ease;
             }
 
             p {
@@ -122,6 +228,8 @@
           display: flex;
           flex-direction: row;
           align-items: center;
+          width: 350px;
+          margin-bottom: 20px;
           h4 {
             margin-right: 10px;
           }
@@ -130,10 +238,21 @@
             margin-right: auto;
           }
           button {
+            color: white;
             border: none;
             padding: 10px;
+            margin-right: 10px;
             border-radius: 10px;
-            background-color: rgb(221, 184, 255);
+            background-color: rgb(4, 4, 4);
+            transition: 0.5s ease;
+          }
+          .Logout:hover {
+            cursor: pointer;
+            color: red;
+          }
+          .rstpass:hover {
+            cursor: pointer;
+            color: rgb(130, 130, 130);
           }
         }
         .headprof {
@@ -152,21 +271,61 @@
             font-size: 28px;
           }
         }
+        .Admin {
+          font-weight: 700;
+          border: none;
+          width: 350px;
+          border-radius: 20px;
+          color: white;
+          background-color: black;
+          padding: 15px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transition: 0.5s ease;
+          i {
+            margin-right: auto;
+          }
+          &:hover {
+            cursor: pointer;
+            color: gray;
+          }
+        }
       }
     }
-    #AddOrEdit{
+    #AddOrEdit {
       margin: auto;
       padding: 20px;
-      form{
+      width: 500px;
+      #form {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        input{
+        input {
+          border: none;
+          background-color: whitesmoke;
+          border-radius: 10px;
+          margin: 10px 0px;
           padding: 15px;
+          width: 400px;
+        }
+        #priceInput,
+        #stockInput {
+          width: 197px;
+        }
+        button {
+          background-color: #121212;
+          color: white;
+          margin: 10px 0px;
+          border: none;
+          border-radius: 10px;
+          padding: 15px;
+          width: 400px;
         }
       }
     }
+
     nav {
       padding: 10px;
       background-color: white;
@@ -174,6 +333,8 @@
       justify-content: space-evenly;
       align-items: center;
       min-width: 100vw;
+      position: sticky;
+      top: 0;
       button {
         font-weight: 500;
         width: 95px;
@@ -198,8 +359,11 @@
         border-radius: 20px;
         margin: 0px 20px;
         font-weight: 600;
+        transition: 0.5s ease;
         &:hover {
           cursor: pointer;
+          color: rgb(80, 80, 80);
+          outline: rgb(80, 80, 80);
         }
       }
       img {
@@ -218,18 +382,49 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
+
       header {
+        margin: 0;
         img {
           min-width: 100vw;
         }
       }
-      .productcontent {
-        margin: 20px 0px;
+      .prodHead {
         display: flex;
-        
+        justify-content: center;
+        align-items: center;
+        min-width: 100vw;
+        background-color: rgb(25, 25, 25);
+        margin: -1px;
+      }
+
+      .productcontent {
+        max-width: 100vw;
+        overflow-x: auto;
+        white-space: nowrap;
+        display: flex;
+        &:hover {
+          cursor: scroll;
+        }
+        &::-webkit-scrollbar {
+          height: 5px;
+          width: 10px;
+        }
+        &::-webkit-scrollbar-track {
+          height: 5px;
+          border-radius: 10px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: rgb(59, 59, 59);
+          border-radius: 10px;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+          cursor: pointer;
+          background: #121212;
+        }
 
         .prodItem {
-          padding: 20px;
+          padding: 30px;
           background-color: white;
           width: 300px;
           display: flex;
@@ -243,24 +438,24 @@
           }
           .prodDetail {
             width: 300px;
-            padding: 10px;
+            padding: 10px 20px;
             h1 {
-              font-size: 20px;
+              font-size: 16px;
               font-weight: 600;
             }
             p {
               margin: 10px 0px;
               font-size: 14px;
             }
-            .prodbtn{
-              i{
+            .prodbtn {
+              i {
                 border-radius: 5px;
                 outline: 1px solid black;
                 padding: 5px;
                 width: 50px;
                 text-align: center;
               }
-              button{
+              button {
                 border: none;
                 color: white;
                 background-color: black;
@@ -269,7 +464,7 @@
                 padding: 5px;
               }
             }
-          
+
             #priceTag {
               color: rgb(54, 54, 54);
             }
@@ -283,6 +478,23 @@
     }
   </style>
   <body>
+    <dialog id="adminInventory">
+      <header>
+        <input type="text" placeholder="Search product">
+      <button onclick="AddOrEdit.showModal()">Add Products</button>
+      </header>
+      <table id="productTable">
+        <tr>
+          <th>Product Number</th>
+          <th>Product Name</th>
+          <th>Brand</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Operation</th>
+        </tr>
+      </table>
+    </dialog>
+
     <dialog id="forgotPass">
       <h1>Reset Password</h1>
       <form action="" method="dialog" onsubmit="resetPass()">
@@ -349,49 +561,62 @@
         </div>
 
         <div id="passwordInfo">
-          <h4>password:</h4>
-          <p id="pwDisplay"></p>
-          <button onclick="forgotPass.showModal()">Change Password</button>
+          <button onclick="forgotPass.showModal()" class="rstpass">
+            Change Password
+          </button>
+          <button onclick="Logout()" class="Logout">Log Out</button>
         </div>
+        <button onclick="adminInventory.showModal()" class="Admin">
+          <i class="material-icons">person</i>
+          <p id="adminbtn"></p>
+        </button>
+        <div id="accountControll"></div>
       </div>
     </dialog>
 
     <dialog id="AddOrEdit">
-      <h1>Add Products</h1>
-      <form action="" method="dialog" onsubmit="addprod()">
+      <h1 id="titleform">Add Products</h1>
+      <div id="form" >
         <input
           type="text"
           name=""
           id="prodnameInput"
           placeholder="Enter Product Name"
+          required
         />
         <input
           type=""
           name=""
           id="brandinput"
           placeholder="Brand Name"
+          required
         />
-        <input
-          type="number"
-          name=""
-          id="priceInput"
-          placeholder="Price"
-        />
-        <input
-          type="number"
-          name=""
-          id="stockInput"
-          placeholder="Stock"
-        />
+        <div>
+          <input
+            type="number"
+            name=""
+            id="priceInput"
+            placeholder="Price"
+            required
+          />
+          <input
+            type="number"
+            name=""
+            id="stockInput"
+            placeholder="Stock"
+            required
+          />
+        </div>
         <input
           type="text"
           name=""
           id="imageIput"
           placeholder="Provide Image Link"
+          required
         />
-        <button type="submit">Submit</button>
-        <button type="submit">Cancel</button>
-      </form>
+        <button onclick="addproduct()">Add</button>
+        <button type="reset" onclick="close">Cancel</button>
+      </div>
     </dialog>
 
     <nav>
@@ -403,11 +628,10 @@
       <div>
         <p id="profileName" onclick="profile.showModal()"></p>
         <button>Cart</button>
-        <button onclick="Logout()">Log Out</button>
-        <button onclick="AddOrEdit.showModal()">Add Products</button>
+
+       
       </div>
     </nav>
-    
 
     <main>
       <header>
@@ -416,62 +640,80 @@
           alt=""
         />
       </header>
-
-      <div class="productcontent" id="productcontent">
-        <!-- <div class="prodItem" id="prodItem">
-          <img
-            src="https://www.footlocker.ph/media/catalog/product/cache/1384ea813c36abc3a773dd6494b9b881/0/8/0803-NEWMR530SGD00W06H-1.jpg"
-            alt=""
-          />
-          <div class="line"></div>
-          <div class="prodDetail">
-            <h1>MR 530</h1>
-            <p>New Balance</p>
-            <p id="priceTag">Php 7000</p>
-            <div class="prodbtn">
-              <i class="fa fa-shopping-cart"></i>
-              <button>BUY</button>
-            </div>
-          </div>
-        </div> -->
+      <div class="prodHead">
+        <img
+          src="https://www.footlocker.ph/media/wysiwyg/New-Arrival-1600x200.gif"
+          alt=""
+        />
       </div>
-
-      <h1></h1>
+      <div class="productcontent" id="productcontent"></div>
+      <!-- <button id="prevBtn">Previous</button>
+      <button id="nextBtn">Next</button> -->
     </main>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script src="script.js"></script> -->
     <script>
       let inventories = [];
-      async function getInventory(){
-        
-         let response = await fetch(
-           "http://localhost/Eshoppe/api/inventoryDb.php?action=read"
-         );
-         inventories = await response.json();
-         console.log(inventories);
-         renderInventory();
-       }
-      async function addprod(){
-        let payload = {
-           productName: prodnameInput.value,
-           brand: brandinput.value,
-           price: priceInput.value,
-           stock: stockInput.value,
-           imagelink: imageIput.value,
-         };
-
-         let options = {
-           method: "post",
-           body: JSON.stringify(payload),
-         };
-
-         let response = await fetch(
-             "http://localhost/Eshoppe/api/inventoryDb.php?action=create",
-             options
-           );
-           console.log(response);
-           getInventory();
+      async function getInventory() {
+        let response = await fetch(
+          "http://localhost/Eshoppe/api/inventoryDb.php?action=read"
+        );
+        inventories = await response.json();
+        console.log(inventories);
+        renderInventory();
       }
-      function renderInventory(){
-        productcontent.innerHTML = ``
+
+      async function addproduct() {
+        let payload = {
+          productName: prodnameInput.value,
+          image: imageIput.value,
+          brand: brandinput.value,
+          price: priceInput.value,
+          stock: stockInput.value,
+        };
+
+        let options = {
+          method: "post",
+          body: JSON.stringify(payload),
+        };
+        if (payload.id){
+          titleform.innerHTML = "Edit Product"
+          let response = await fetch(
+            "http://localhost/Eshoppe/api/inventoryDb.php?action=update",
+            options
+            );
+        }else{
+          let response = await fetch(
+            "http://localhost/Eshoppe/api/inventoryDb.php?action=create",
+            options
+            );
+
+            
+          }
+          
+        
+        getInventory();
+      }
+
+      function updateProd(id){
+           console.log(id);
+
+           for (const inventory of inventories) {
+               if(id == inventory.id) {
+                prodnameInput.value = inventory.productName
+                imageIput.value = inventory.image
+                brandinput.value = inventory.brand
+                priceInput.value = inventory.price
+                stockInput.value = inventory.stock
+               }
+           }
+           AddOrEdit.showModal();
+       }
+
+      function renderInventory() {
+        productTable.innerHTML = ``;
+        productcontent.innerHTML = ``;
         for (const inventory of inventories) {
           productcontent.innerHTML += `
         <div class="prodItem" id="prodItem">
@@ -482,7 +724,7 @@
           <div class="line"></div>
           <div class="prodDetail">
             <h1>${inventory.productName}</h1>
-            <p>${inventory.brand}</p>
+            <p>${  inventory.brand}</p>
             <p id="priceTag">Php ${inventory.price}</p>
             <div class="prodbtn">
               <i class="fa fa-shopping-cart"></i>
@@ -491,8 +733,42 @@
           </div>
         </div>
           `;
+
+          productTable.innerHTML += `
+          <tr>
+          <td>00${inventory.id}</td>
+          <td>${inventory.productName}</td>
+          <td>${inventory.brand}</td>
+          <td>Php ${inventory.price}</td>
+          <td>${inventory.stock}pcs</td>
+          <td>
+            <button onclick="updateProd(${inventory.id})"><i class="fa fa-edit"></i> Edit</button>
+            <button onclick="deleteProd(${inventory.id})"><i class="fa fa-trash-o"></i> Delete</button>
+          </td>
+        </tr>
+          `;
+          
+        }
+
       }
-    }
+      async function deleteProd(id) {
+           if(confirm("Do you want to delete this Item")) 
+           {
+               console.log("yes");
+               let payload = {
+                   id
+               };
+
+               let options = {
+                   method: "post",
+                   body: JSON.stringify(payload)
+               };
+
+               let response = await fetch("http://localhost/Eshoppe/api/inventoryDb.php?action=delete", options);
+               console.log(response);
+               getInventory();
+           }
+       }
 
       async function checkToken() {
         let payload = {
@@ -529,10 +805,12 @@
         );
 
         let profile = await response.json();
+        //nav
         profileName.innerHTML = profile.name;
+        //nav
         profName.innerHTML = profile.name;
         emaildisplay.innerHTML = profile.email;
-        // pwDisplay.innerHTML = profile.password;
+        adminbtn.innerHTML = `(Admin Inventory)   ${profile.name}`;
       }
 
       async function resetPass() {
@@ -577,6 +855,37 @@
         );
         checkToken();
       }
+
+      function ScrollEvent() {
+        const scrollableContent = productcontent;
+
+        let isMouseDown = false;
+        let startX;
+        let scrollLeft;
+
+        scrollableContent.addEventListener("mousedown", (e) => {
+          isMouseDown = true;
+          startX = e.pageX - scrollableContent.offsetLeft;
+          scrollLeft = scrollableContent.scrollLeft;
+        });
+
+        scrollableContent.addEventListener("mouseup", () => {
+          isMouseDown = false;
+        });
+
+        scrollableContent.addEventListener("mouseleave", () => {
+          isMouseDown = false;
+        });
+
+        scrollableContent.addEventListener("mousemove", (e) => {
+          if (!isMouseDown) return;
+          e.preventDefault();
+          const x = e.pageX - scrollableContent.offsetLeft;
+          const walk = (x - startX) * 2;
+          scrollableContent.scrollLeft = scrollLeft - walk;
+        });
+      }
+      ScrollEvent();
       getInventory();
       checkToken();
       displayProfile();
