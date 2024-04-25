@@ -63,13 +63,19 @@
       cursor: pointer;
       background: #121212;
     }
+
     #adminInventory {
+      padding: 20px;
+      border-radius: 10px;
       margin: auto;
       width: 1000px;
       padding: 0px 20px;
       height: 500px;
       border: none;
-      header{
+      #tableArea {
+        overflow-y: auto;
+      }
+      header {
         padding: 10px 0px;
         background-color: white;
         display: flex;
@@ -77,26 +83,33 @@
         align-items: center;
         position: sticky;
         top: 0;
-        button{
+        button {
           margin: 10px 0px;
           border-radius: 10px;
           border: none;
           color: white;
           background-color: black;
           padding: 10px;
+          margin-right: auto;
         }
-        input{
+        i {
+          font-size: 20px;
+          margin: 0px 10px;
+          &:hover {
+            cursor: pointer;
+            color: rgb(138, 0, 0);
+          }
+        }
+        input {
           width: 400px;
           background-color: whitesmoke;
           border-radius: 10px;
           border: none;
           padding: 10px;
-          margin-right: auto;
+          margin-right: 20px;
         }
       }
       #productTable {
-        overflow: auto;
-        font-family: Arial, Helvetica, sans-serif;
         border-collapse: collapse;
         width: 100%;
       }
@@ -105,8 +118,18 @@
       #productTable th {
         border: 1px solid #ddd;
         padding: 10px;
-        button{
+        button {
+          text-align: center;
+          border: none;
+          border-radius: 5px;
+          color: #ffff;
           padding: 10px;
+          background-color: rgb(20, 20, 20);
+          transition: 0.3s ease;
+          &:hover {
+            cursor: pointer;
+            opacity: 0.8;
+          }
         }
       }
 
@@ -169,7 +192,6 @@
       border: none;
       border-radius: 10px;
       width: 400px;
-      height: 600px;
       justify-content: center;
       align-items: center;
       padding: 20px;
@@ -271,7 +293,7 @@
             font-size: 28px;
           }
         }
-        .Admin {
+        #Admin {
           font-weight: 700;
           border: none;
           width: 350px;
@@ -297,7 +319,7 @@
       margin: auto;
       padding: 20px;
       width: 500px;
-      #form {
+      #formFill {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -325,7 +347,44 @@
         }
       }
     }
-
+    #cartDialog {
+      min-height: 100vh;
+      padding: 20px;
+      border: none;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.214);
+      .cartContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        .cartItem {
+          display: flex;
+          justify-content: left;
+          align-items: center;
+          #prodName {
+            margin-right: auto;
+          }
+          img {
+            height: 150px;
+          }
+          #priceQty {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 0px 10px;
+            p {
+              margin: 0px 10px;
+            }
+          }
+          button {
+            margin: 0px 10px;
+            padding: 10px;
+            color: white;
+            background-color: black;
+          }
+        }
+      }
+    }
     nav {
       padding: 10px;
       background-color: white;
@@ -352,14 +411,22 @@
         align-items: center;
         flex-wrap: wrap;
       }
-      p {
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         color: white;
         background-color: rgb(20, 20, 20);
-        padding: 10px 20px;
-        border-radius: 20px;
+        padding: 10px 10px;
+        border-radius: 25px;
         margin: 0px 20px;
         font-weight: 600;
         transition: 0.5s ease;
+        width: 140px;
+        .material-icons {
+          margin-right: auto;
+          font-size: 30px;
+        }
         &:hover {
           cursor: pointer;
           color: rgb(80, 80, 80);
@@ -431,6 +498,10 @@
           justify-content: center;
           align-items: center;
           flex-direction: column;
+          transition: 0.2s ease;
+          &:hover {
+            filter: brightness(90%);
+          }
           .line {
             width: 280px;
             padding: 1px;
@@ -476,23 +547,105 @@
         }
       }
     }
+    .container {
+      max-width: 1170px;
+      margin: auto;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    ul {
+      list-style: none;
+    }
+    .footer {
+      background-color: #101010;
+      padding: 70px 0;
+    }
+    .footer-col {
+      width: 25%;
+      padding: 0 15px;
+      img {
+        height: 100px;
+      }
+    }
+    .footer-col h4 {
+      font-size: 18px;
+      color: #ffffff;
+      text-transform: capitalize;
+      margin-bottom: 35px;
+      font-weight: 500;
+      position: relative;
+    }
+    .footer-col h4::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -10px;
+      background-color: #e91e63;
+      height: 2px;
+      box-sizing: border-box;
+      width: 50px;
+    }
+    .footer-col ul li:not(:last-child) {
+      margin-bottom: 10px;
+    }
+    .footer-col ul li a {
+      font-size: 16px;
+      text-transform: capitalize;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 300;
+      color: #bbbbbb;
+      display: block;
+      transition: all 0.3s ease;
+    }
+    .footer-col ul li a:hover {
+      color: #ffffff;
+      padding-left: 8px;
+    }
   </style>
   <body>
+    <dialog id="cartDialog">
+      <h1>YOUR CART</h1>
+      <div id="cartContainer" class="cartContainer">
+        <div class="cartItem">
+          <img
+            src="https://www.footlocker.ph/media/catalog/product/cache/1384ea813c36abc3a773dd6494b9b881/0/8/0803-NIKFD101910000W07Y-1.jpg"
+            alt=""
+          />
+          <div id="prodName">
+            <h2>AIR FORCE 1 HIGH BOYS</h2>
+            <p>Nike</p>
+          </div>
+          <div id="priceQty">
+            <p>Price</p>
+            <p>1x</p>
+          </div>
+          <button>Check Out</button>
+          <button>Remove</button>
+        </div>
+      </div>
+    </dialog>
+
     <dialog id="adminInventory">
       <header>
-        <input type="text" placeholder="Search product">
-      <button onclick="AddOrEdit.showModal()">Add Products</button>
+        <input type="text" placeholder="Search product" />
+        <button type="reset" onclick="addform()">Add Products</button>
+        <i class="material-icons" onclick="adminInventory.close()">cancel</i>
       </header>
-      <table id="productTable">
-        <tr>
-          <th>Product Number</th>
-          <th>Product Name</th>
-          <th>Brand</th>
-          <th>Price</th>
-          <th>Stock</th>
-          <th>Operation</th>
-        </tr>
-      </table>
+      <div id="tableArea">
+        <table id="productTable">
+          <tr>
+            <th>Product Number</th>
+            <th>Product Name</th>
+            <th>Brand</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Operation</th>
+          </tr>
+        </table>
+      </div>
     </dialog>
 
     <dialog id="forgotPass">
@@ -532,7 +685,7 @@
           />
           <div>
             <h3 id="profName"></h3>
-            <p style="color: rgb(0, 192, 0)">Active now</p>
+            <p style="color: rgb(0, 192, 0)" id="statusinfo">Active now</p>
           </div>
         </div>
 
@@ -564,9 +717,11 @@
           <button onclick="forgotPass.showModal()" class="rstpass">
             Change Password
           </button>
-          <button onclick="Logout()" class="Logout">Log Out</button>
+          <button onclick="Logout()" class="Logout">
+            <i class="fa fa-sign-out"></i> Log Out
+          </button>
         </div>
-        <button onclick="adminInventory.showModal()" class="Admin">
+        <button onclick="adminInventory.showModal()" id="Admin">
           <i class="material-icons">person</i>
           <p id="adminbtn"></p>
         </button>
@@ -576,7 +731,15 @@
 
     <dialog id="AddOrEdit">
       <h1 id="titleform">Add Products</h1>
-      <div id="form" >
+
+      <form id="formFill" method="dialog" action="" onsubmit="addproduct()">
+        <input
+          type="hidden"
+          name=""
+          id="idInput"
+          placeholder="Enter ID"
+          required
+        />
         <input
           type="text"
           name=""
@@ -614,9 +777,10 @@
           placeholder="Provide Image Link"
           required
         />
-        <button onclick="addproduct()">Add</button>
-        <button type="reset" onclick="close">Cancel</button>
-      </div>
+        <button type="submit" id="editBtn">Add</button>
+        <!-- <button type="submit" id="editBtn" onclick="addproduct()">Add</button> -->
+        <button onclick="AddOrEdit.close()">Cancel</button>
+      </form>
     </dialog>
 
     <nav>
@@ -626,10 +790,13 @@
       />
       <input type="text" name="" id="" placeholder="search something" />
       <div>
-        <p id="profileName" onclick="profile.showModal()"></p>
-        <button>Cart</button>
-
-       
+        <button>
+          <i class="material-icons">account_circle</i>
+          <p id="profileName" onclick="profile.showModal()"></p>
+        </button>
+        <button onclick="cartDialog.showModal()">
+          <i class="material-icons">shopping_cart</i> Cart
+        </button>
       </div>
     </nav>
 
@@ -647,12 +814,49 @@
         />
       </div>
       <div class="productcontent" id="productcontent"></div>
-      <!-- <button id="prevBtn">Previous</button>
-      <button id="nextBtn">Next</button> -->
     </main>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-    <script src="script.js"></script> -->
+
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="footer-col">
+            <img
+              src="https://logos-world.net/wp-content/uploads/2022/04/Foot-Locker-Logo.png"
+              alt=""
+            />
+            <ul>
+              <li><a href="#">about us</a></li>
+              <li><a href="#">our services</a></li>
+              <li><a href="#">privacy policy</a></li>
+              <li><a href="#">affiliate program</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>get help</h4>
+            <ul>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="#">shipping</a></li>
+              <li><a href="#">returns</a></li>
+              <li><a href="#">order status</a></li>
+              <li><a href="#">payment options</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>online shop</h4>
+            <ul>
+              <li><a href="#">watch</a></li>
+              <li><a href="#">bag</a></li>
+              <li><a href="#">shoes</a></li>
+              <li><a href="#">dress</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>follow us</h4>
+          </div>
+        </div>
+      </div>
+    </footer>
+
     <script>
       let inventories = [];
       async function getInventory() {
@@ -663,9 +867,16 @@
         console.log(inventories);
         renderInventory();
       }
+      function addform() {
+        formFill.reset();
+        editBtn.innerHTML = "Add";
+        AddOrEdit.showModal();
+        idInput.value = null;
+      }
 
       async function addproduct() {
         let payload = {
+          id: idInput.value,
           productName: prodnameInput.value,
           image: imageIput.value,
           brand: brandinput.value,
@@ -677,42 +888,58 @@
           method: "post",
           body: JSON.stringify(payload),
         };
-        if (payload.id){
-          titleform.innerHTML = "Edit Product"
+
+        if (payload.id) {
           let response = await fetch(
             "http://localhost/Eshoppe/api/inventoryDb.php?action=update",
             options
-            );
-        }else{
+          );
+
+          console.log(response);
+          getInventory();
+        } else {
           let response = await fetch(
             "http://localhost/Eshoppe/api/inventoryDb.php?action=create",
             options
-            );
+          );
+          console.log(response);
+          getInventory();
+        }
 
-            
-          }
-          
-        
-        getInventory();
+        titleform.innerHTML = "Add Product";
+        AddOrEdit.close();
       }
 
-      function updateProd(id){
-           console.log(id);
+      function updateProd(id) {
+        console.log(id);
 
-           for (const inventory of inventories) {
-               if(id == inventory.id) {
-                prodnameInput.value = inventory.productName
-                imageIput.value = inventory.image
-                brandinput.value = inventory.brand
-                priceInput.value = inventory.price
-                stockInput.value = inventory.stock
-               }
-           }
-           AddOrEdit.showModal();
-       }
+        for (const inventory of inventories) {
+          if (id == inventory.id) {
+            idInput.value = inventory.id;
+            prodnameInput.value = inventory.productName;
+            imageIput.value = inventory.image;
+            brandinput.value = inventory.brand;
+            priceInput.value = inventory.price;
+            stockInput.value = inventory.stock;
+          }
+        }
+
+        titleform.innerHTML = "Edit Product";
+        editBtn.innerHTML = "Save";
+        AddOrEdit.showModal();
+      }
 
       function renderInventory() {
-        productTable.innerHTML = ``;
+        productTable.innerHTML = `
+          <tr>
+          <th>Product Number</th>
+          <th>Product Name</th>
+          <th>Brand</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Operation</th>
+        </tr>
+        `;
         productcontent.innerHTML = ``;
         for (const inventory of inventories) {
           productcontent.innerHTML += `
@@ -724,10 +951,10 @@
           <div class="line"></div>
           <div class="prodDetail">
             <h1>${inventory.productName}</h1>
-            <p>${  inventory.brand}</p>
+            <p>${inventory.brand}</p>
             <p id="priceTag">Php ${inventory.price}</p>
             <div class="prodbtn">
-              <i class="fa fa-shopping-cart"></i>
+              <i class="fa fa-shopping-cart" onclick="cart(${inventory.id})"></i>
               <button>BUY</button>
             </div>
           </div>
@@ -737,7 +964,7 @@
           productTable.innerHTML += `
           <tr>
           <td>00${inventory.id}</td>
-          <td>${inventory.productName}</td>
+          <td style="font-weight: 600;">${inventory.productName}</td>
           <td>${inventory.brand}</td>
           <td>Php ${inventory.price}</td>
           <td>${inventory.stock}pcs</td>
@@ -747,28 +974,60 @@
           </td>
         </tr>
           `;
-          
         }
+      }
+      async function cart(id) {
+        cartDialog.showModal();
+        let payload = {
+          id: id,
+        };
+        let option = {
+          method: "post",
+          body: JSON.stringify(payload),
+        };
 
+        let response = await fetch(
+          "http://localhost/Eshoppe/api/inventoryDb.php?action=cart",
+          option
+        );
+        let product = await response.json();
+
+        cartContainer.innerHTML += `
+        <div class="cartItem">
+          <img src="${product.image}" alt="">
+          <div id="prodName">
+          <h2>${product.productName}</h2>
+          <p>${product.brand}</p>
+         </div>
+         <div id="priceQty">
+          <p>${product.price}</p>
+          <p>${product.stock}x</p>
+        </div>
+          <button>Check Out</button>
+          <button>Remove</button>
+        </div>
+        `;
       }
       async function deleteProd(id) {
-           if(confirm("Do you want to delete this Item")) 
-           {
-               console.log("yes");
-               let payload = {
-                   id
-               };
+        if (confirm("Do you want to delete this Item")) {
+          console.log("yes");
+          let payload = {
+            id,
+          };
 
-               let options = {
-                   method: "post",
-                   body: JSON.stringify(payload)
-               };
+          let options = {
+            method: "post",
+            body: JSON.stringify(payload),
+          };
 
-               let response = await fetch("http://localhost/Eshoppe/api/inventoryDb.php?action=delete", options);
-               console.log(response);
-               getInventory();
-           }
-       }
+          let response = await fetch(
+            "http://localhost/Eshoppe/api/inventoryDb.php?action=delete",
+            options
+          );
+          console.log(response);
+          getInventory();
+        }
+      }
 
       async function checkToken() {
         let payload = {
@@ -803,7 +1062,6 @@
           "http://localhost/Eshoppe/api/user.php?action=profile",
           option
         );
-
         let profile = await response.json();
         //nav
         profileName.innerHTML = profile.name;
@@ -811,6 +1069,12 @@
         profName.innerHTML = profile.name;
         emaildisplay.innerHTML = profile.email;
         adminbtn.innerHTML = `(Admin Inventory)   ${profile.name}`;
+
+        if (emaildisplay.innerHTML === "jammilitar@gmail.com") {
+          statusinfo.innerHTML = "Administrator";
+        } else {
+          Admin.style.display = "none";
+        }
       }
 
       async function resetPass() {

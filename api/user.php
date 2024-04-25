@@ -15,6 +15,9 @@ if ($action == 'reset'){
 if ($action == 'profile'){
     displayProfile();
 }
+if ($action == 'createAccount'){
+    createAccount();
+}
 
 function displayProfile(){
     $payload = file_get_contents("php://input");
@@ -110,4 +113,15 @@ if($results){
     http_response_code(400);
     echo "Invalid"; 
 }
+}
+function createAccount() {
+    $payload = file_get_contents("php://input");
+    $payload = json_decode($payload);
+    $token = generateToken();
+    $conn = getDb();
+    $query = $conn->query("
+    INSERT INTO `user` (`id`, `name`, `username`, `password`, `email`, `token`) VALUES (NULL, '$payload->fullname', '$payload->username', '$payload->password', '$payload->email', '$token');
+    ");
+    $results = $query->fetch();
+    print_r($results);
 }

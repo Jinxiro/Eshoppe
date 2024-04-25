@@ -15,6 +15,9 @@ if ($action == 'delete'){
 if ($action == 'update'){
     update();
 }
+if ($action == 'cart'){
+    cart();
+}
 
 function read(){
     $conn = getDb();
@@ -36,12 +39,26 @@ function create() {
 function update(){
     $payload = file_get_contents("php://input");
     $payload = json_decode($payload);
+
     $conn = getDb();
     $query = $conn->query("
     UPDATE `eshop_inventory` SET `productName`='$payload->productName',`image`='$payload->image',`brand`='$payload->brand',`price`='$payload->price',`stock`='$payload->stock' WHERE `eshop_inventory`.`id` = '$payload->id'");
     $results = $query->fetch();
     print_r($results);
+
 }
+function cart(){
+    $payload = file_get_contents("php://input");
+    $payload = json_decode($payload);
+
+    $conn = getDb();
+    $query = $conn->query("
+    SELECT * FROM `eshop_inventory` WHERE `eshop_inventory`.`id` = '$payload->id'");
+
+    $results = $query->fetch(PDO::FETCH_ASSOC);
+    echo json_encode($results);
+}
+
 
 function delete(){
     $payload = file_get_contents("php://input");
